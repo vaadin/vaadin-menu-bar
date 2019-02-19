@@ -7,6 +7,11 @@ This program is available under Apache License Version 2.0, available at https:/
 <link rel="import" href="../../polymer/polymer-element.html">
 <link rel="import" href="../../vaadin-themable-mixin/vaadin-themable-mixin.html">
 <link rel="import" href="../../vaadin-element-mixin/vaadin-element-mixin.html">
+<link rel="import" href="../../vaadin-context-menu/src/vaadin-context-menu.html">
+<link rel="import" href="../../vaadin-tabs/src/vaadin-tabs.html">
+<link rel="import" href="../../vaadin-tabs/src/vaadin-tab.html">
+<link rel="import" href="../../vaadin-list-box/src/vaadin-list-box.html">
+<link rel="import" href="../../vaadin-item/src/vaadin-item.html">
 
 <dom-module id="vaadin-menu">
   <template>
@@ -18,8 +23,28 @@ This program is available under Apache License Version 2.0, available at https:/
       :host([hidden]) {
         display: none !important;
       }
+
+      vaadin-tab::before,
+      vaadin-tab::after {
+        display: none;
+      }
     </style>
-    <slot></slot>
+
+    <vaadin-tabs>
+      <template is="dom-repeat" items="[[items]]">
+        <vaadin-tab
+          on-click="__onTabClick"
+          on-mouseover="__onTabMouseover"
+          on-keydown="__onTabKeydown"
+          items=[[item.children]]>
+          <span>[[item.text]]</span><span part="toggle-button"></span>
+          <vaadin-context-menu
+            open-on="opensubmenu"
+            items="[[item.children]]">
+          </vaadin-context-menu>
+        </vaadin-tab>
+      </template>
+    </vaadin-tabs>
   </template>
 
   <script>
@@ -41,13 +66,105 @@ This program is available under Apache License Version 2.0, available at https:/
         static get is() {
           return 'vaadin-menu';
         }
+
         static get version() {
           return '0.1.0';
         }
 
         static get properties() {
           return {
+            items: {
+              type: Array,
+              value: []
+            }
           };
+        }
+
+        ready() {
+          super.ready();
+          this.__boundOutsideClickListener = this.__outsideClickListener.bind(this);
+          this.__boundOnContextMenuKeydown = this.__onContextMenuKeydown.bind(this);
+        }
+
+        connectedCallback() {
+          super.connectedCallback();
+          document.addEventListener('click', this.__boundOutsideClickListener);
+        }
+
+        disconnectedCallback() {
+          super.disconnectedCallback();
+          document.removeEventListener('click', this.__boundOutsideClickListener);
+        }
+
+        __onContextMenuKeydown(e) {
+          if (e.keyCode === 38 && e.target === e.target.parentElement.items[0]) {
+            this.__closeSubMenus();
+            this.shadowRoot.querySelector('vaadin-tab[selected]').focus();
+          }
+        }
+
+        __outsideClickListener(e) {
+          if (!e.path.includes(this)) {
+            this.__closeSubMenus();
+          }
+        }
+
+        __getHostTab(element) {
+          let tab = element;
+          while (tab.localName !== 'vaadin-tab') {
+            tab = tab.parentElement;
+          }
+          return tab;
+        }
+
+        __onTabKeydown(e) {
+          if (e.keyCode === 40) {
+            this.__getHostTab(e.target).click();
+          }
+        }
+
+        __onTabMouseover(e) {
+          const tab = this.__getHostTab(e.target);
+          if (!tab.selected && Array.from(this.shadowRoot.querySelectorAll('vaadin-context-menu')).some(menu => menu.opened)) {
+            tab.click();
+          }
+        }
+
+        __onTabClick(e) {
+          const tab = this.__getHostTab(e.target);
+          const menu = tab.querySelector('vaadin-context-menu');
+
+          if (!menu.opened) {
+            this.__closeSubMenus();
+          }
+
+          menu.items = tab.items;
+          menu.listenOn = tab;
+          menu.$.overlay.modeless = true;
+          menu.$.overlay.addEventListener('keydown', this.__boundOnContextMenuKeydown);
+
+          const tabs = tab.parentElement;
+          const tabRect = tab.getBoundingClientRect();
+
+          // TODO: Why needed?
+          requestAnimationFrame(() => {
+            tab.dispatchEvent(new CustomEvent('opensubmenu', {detail: {
+              x: tabRect.left,
+              y: tabRect.bottom,
+              children: tab.items
+            }}));
+          });
+        }
+
+        __itemSelected(item) {
+          this.__closeSubMenus();
+          this.dispatchEvent(new CustomEvent('item-selected', {detail: {
+            value: item._node
+          }}));
+        }
+
+        __closeSubMenus() {
+          Array.from(this.shadowRoot.querySelectorAll('vaadin-context-menu')).forEach(menu => menu.close());
         }
       }
 

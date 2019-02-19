@@ -1,0 +1,27 @@
+<link rel="import" href="../../../vaadin-context-menu/theme/lumo/vaadin-context-menu.html">
+<link rel="import" href="../../../vaadin-tabs/theme/lumo/vaadin-tabs.html">
+<link rel="import" href="../../../vaadin-tabs/theme/lumo/vaadin-tab.html">
+<link rel="import" href="../../../vaadin-list-box/theme/lumo/vaadin-list-box.html">
+<link rel="import" href="../../../vaadin-item/theme/lumo/vaadin-item.html">
+<link rel="import" href="../../../vaadin-lumo-styles/font-icons.html">
+<link rel="import" href="../../../vaadin-lumo-styles/mixins/field-button.html">
+
+<dom-module id="lumo-menu" theme-for="vaadin-menu">
+  <template>
+    <style>
+      :host {
+        outline: none;
+      }
+
+      [part="toggle-button"]::before {
+        font-family: lumo-icons;
+        font-size: var(--lumo-icon-size-m);
+        content: var(--lumo-icons-angle-right);
+      }
+
+      :host([orientation="horizontal"]) [part="toggle-button"]::before {
+        content: var(--lumo-icons-angle-down);
+      }
+    </style>
+  </template>
+</dom-module>
