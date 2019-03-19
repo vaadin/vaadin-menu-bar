@@ -3,8 +3,8 @@
   "pages": [
   {
     "name": "Basics",
-    "url": "menu-basic-bar-demos",
-    "src": "menu-basic-bar-demos.html",
+    "url": "menu-bar-basic-demos",
+    "src": "menu-bar-basic-demos.html",
     "meta": {
       "title": "Vaadin Menu Bar Basics",
       "description": "",
