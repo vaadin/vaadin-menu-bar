@@ -40,11 +40,6 @@ This program is available under Apache License Version 2.0, available at https:/
       ];
     }
 
-    constructor() {
-      super();
-      this._hiddenButtons = new WeakMap();
-    }
-
     ready() {
       super.ready();
 
@@ -130,7 +125,7 @@ This program is available under Apache License Version 2.0, available at https:/
         let i;
         for (i = buttons.length; i > 0; i--) {
           const btn = buttons[i - 1];
-          if (this._hiddenButtons.has(btn)) {
+          if (getComputedStyle(btn).visibility === 'hidden') {
             continue;
           }
 
@@ -139,9 +134,8 @@ This program is available under Apache License Version 2.0, available at https:/
             break;
           }
 
-          // save the button width to restore it later
-          this._hiddenButtons.set(btn, btnWidth);
-          btn.setAttribute('hidden', '');
+          btn.style.visibility = 'hidden';
+          btn.style.position = 'absolute';
         }
 
         ellipsis.item = {children: this.items.slice(i)};
@@ -149,16 +143,16 @@ This program is available under Apache License Version 2.0, available at https:/
         for (let i = 0; i < buttons.length; i++) {
           const btn = buttons[i];
 
-          if (!this._hiddenButtons.has(btn)) {
+          if (getComputedStyle(btn).visibility !== 'hidden') {
             continue;
           }
 
           const ellipsisLeft = ellipsis.offsetLeft;
-          const btnWidth = this._hiddenButtons.get(btn);
+          const btnWidth = btn.getBoundingClientRect().width;
 
           if ((ellipsisLeft + ellipsis.offsetWidth + btnWidth) < containerWidth) {
-            this._hiddenButtons.delete(btn);
-            btn.removeAttribute('hidden');
+            btn.style.visibility = '';
+            btn.style.position = '';
 
             ellipsis.item = {children: this.items.slice(i + 1)};
 

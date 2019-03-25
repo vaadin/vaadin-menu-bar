@@ -171,6 +171,18 @@
     describe('ellipsis button', () => {
       let menu, buttons, ellipsis;
 
+      const assertHidden = elem => {
+        const style = getComputedStyle(elem);
+        expect(style.visibility).to.equal('hidden');
+        expect(style.position).to.equal('absolute');
+      };
+
+      const assertVisible = elem => {
+        const style = getComputedStyle(elem);
+        expect(style.visibility).to.equal('visible');
+        expect(style.position).to.not.equal('absolute');
+      };
+
       beforeEach(done => {
         menu = fixture('default');
 
@@ -190,8 +202,8 @@
       });
 
       it('should show ellipsis button and hide the buttons which do not fit', () => {
-        expect(buttons[2].hasAttribute('hidden')).to.be.true;
-        expect(buttons[3].hasAttribute('hidden')).to.be.true;
+        assertHidden(buttons[2]);
+        assertHidden(buttons[2]);
         expect(ellipsis.hasAttribute('hidden')).to.be.false;
       });
 
@@ -207,7 +219,7 @@
         menu.style.width = '350px';
         menu.notifyResize();
         Polymer.RenderStatus.afterNextRender(menu, () => {
-          expect(buttons[1].hasAttribute('hidden')).to.be.false;
+          assertVisible(buttons[1]);
           expect(ellipsis.item.children.length).to.equal(1);
           expect(ellipsis.item.children[0]).to.deep.equal(menu.items[3]);
           done();
@@ -218,7 +230,7 @@
         menu.style.width = '200px';
         menu.notifyResize();
         Polymer.RenderStatus.afterNextRender(menu, () => {
-          expect(buttons[1].hasAttribute('hidden')).to.be.true;
+          assertHidden(buttons[2]);
           expect(ellipsis.item.children.length).to.equal(3);
           expect(ellipsis.item.children[0]).to.deep.equal(menu.items[1]);
           expect(ellipsis.item.children[1]).to.deep.equal(menu.items[2]);
@@ -231,8 +243,8 @@
         menu.style.width = 'auto';
         menu.notifyResize();
         Polymer.RenderStatus.afterNextRender(menu, () => {
-          expect(buttons[2].hasAttribute('hidden')).to.be.false;
-          expect(buttons[3].hasAttribute('hidden')).to.be.false;
+          assertVisible(buttons[2]);
+          assertVisible(buttons[3]);
           expect(ellipsis.hasAttribute('hidden')).to.be.true;
           expect(ellipsis.item.children.length).to.equal(0);
           done();
