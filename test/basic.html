@@ -203,7 +203,9 @@
 
       it('should show ellipsis button and hide the buttons which do not fit', () => {
         assertHidden(buttons[2]);
-        assertHidden(buttons[2]);
+        expect(buttons[2].disabled).to.be.true;
+        assertHidden(buttons[3]);
+        expect(buttons[3].disabled).to.be.true;
         expect(ellipsis.hasAttribute('hidden')).to.be.false;
       });
 
@@ -220,6 +222,7 @@
         menu.notifyResize();
         Polymer.RenderStatus.afterNextRender(menu, () => {
           assertVisible(buttons[1]);
+          expect(buttons[1].disabled).to.not.be.true;
           expect(ellipsis.item.children.length).to.equal(1);
           expect(ellipsis.item.children[0]).to.deep.equal(menu.items[3]);
           done();
@@ -231,6 +234,7 @@
         menu.notifyResize();
         Polymer.RenderStatus.afterNextRender(menu, () => {
           assertHidden(buttons[2]);
+          expect(buttons[2].disabled).to.be.true;
           expect(ellipsis.item.children.length).to.equal(3);
           expect(ellipsis.item.children[0]).to.deep.equal(menu.items[1]);
           expect(ellipsis.item.children[1]).to.deep.equal(menu.items[2]);
@@ -244,7 +248,9 @@
         menu.notifyResize();
         Polymer.RenderStatus.afterNextRender(menu, () => {
           assertVisible(buttons[2]);
+          expect(buttons[2].disabled).to.not.be.true;
           assertVisible(buttons[3]);
+          expect(buttons[3].disabled).to.not.be.true;
           expect(ellipsis.hasAttribute('hidden')).to.be.true;
           expect(ellipsis.item.children.length).to.equal(0);
           done();
