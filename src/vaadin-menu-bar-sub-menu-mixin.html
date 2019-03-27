@@ -128,6 +128,8 @@ This program is available under Apache License Version 2.0, available at https:/
           y: rect.bottom,
           children: items
         }}));
+
+        button.setAttribute('expanded', '');
       });
     }
 
@@ -138,6 +140,11 @@ This program is available under Apache License Version 2.0, available at https:/
     }
 
     _close() {
+      const listenOn = this._subMenu.listenOn;
+      if (listenOn.localName === 'vaadin-menu-bar-button' &&
+          listenOn.hasAttribute('expanded')) {
+        listenOn.removeAttribute('expanded');
+      }
       this._subMenu.close();
     }
   };
