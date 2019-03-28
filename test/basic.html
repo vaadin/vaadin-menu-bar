@@ -160,6 +160,31 @@
         expect(spy).to.be.calledOnce;
         expect(buttons[3].hasAttribute('focused')).to.be.true;
       });
+
+      describe('theme attribute', () => {
+        it('should propagate theme attribute to all internal buttons', () => {
+          menu.setAttribute('theme', 'contained');
+          buttons.forEach(btn =>
+            expect(btn.getAttribute('theme')).to.equal('contained'));
+        });
+
+        it('should propagate theme attribute to added buttons', done => {
+          menu.setAttribute('theme', 'contained');
+          menu.unshift('items', {text: 'new'});
+          Polymer.RenderStatus.afterNextRender(menu, () => {
+            buttons.forEach(btn =>
+              expect(btn.getAttribute('theme')).to.equal('contained'));
+            done();
+          });
+        });
+
+        it('should remove theme attribute from internal buttons when it is removed from host', () => {
+          menu.setAttribute('theme', 'contained');
+          menu.removeAttribute('theme');
+          buttons.forEach(btn =>
+            expect(btn.hasAttribute('theme')).to.be.false);
+        });
+      });
     });
 
     describe('ellipsis button', () => {
