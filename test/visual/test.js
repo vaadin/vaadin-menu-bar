@@ -36,6 +36,25 @@ gemini.suite('vaadin-menu-bar', function(rootSuite) {
           });
         });
     });
+
+    if (theme === 'material') {
+      gemini.suite(`theme-variants-tests-${theme}`, function(suite) {
+        suite
+          .setUrl(`theme-variants.html?theme=${theme}`)
+          .setCaptureElements('#theme-variants-tests')
+          .capture('theme-variants-1', function(actions) {
+            actions.executeJS(function(window) {
+              window.openSubMenu(0);
+            });
+          })
+          .capture('theme-variants-2', function(actions) {
+            actions.executeJS(function(window) {
+              window.closeSubMenus();
+              window.openSubMenu(1);
+            });
+          });
+      });
+    }
   });
 
 });
