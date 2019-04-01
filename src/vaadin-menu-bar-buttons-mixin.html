@@ -89,14 +89,13 @@ This program is available under Apache License Version 2.0, available at https:/
     }
 
     __updateButtonsTheme() {
-      Array.from(this.shadowRoot.querySelectorAll('vaadin-menu-bar-button'))
-        .forEach(button => {
-          if (this.theme && this.theme !== '') {
-            button.setAttribute('theme', this.theme);
-          } else {
-            button.removeAttribute('theme');
-          }
-        });
+      this._buttons.forEach(button => {
+        if (this.theme && this.theme !== '') {
+          button.setAttribute('theme', this.theme);
+        } else {
+          button.removeAttribute('theme');
+        }
+      });
     }
 
     _themeChanged(theme) {

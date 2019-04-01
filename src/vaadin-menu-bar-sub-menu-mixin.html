@@ -140,10 +140,8 @@ This program is available under Apache License Version 2.0, available at https:/
     }
 
     _close() {
-      const listenOn = this._subMenu.listenOn;
-      if (listenOn.localName === 'vaadin-menu-bar-button' &&
-          listenOn.hasAttribute('expanded')) {
-        listenOn.removeAttribute('expanded');
+      if (this._activeButton.hasAttribute('expanded')) {
+        this._activeButton.removeAttribute('expanded');
       }
       this._subMenu.close();
     }
