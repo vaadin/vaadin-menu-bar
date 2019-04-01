@@ -30,6 +30,18 @@
       :host {
         margin-right: calc(var(--lumo-space-xs) / 2);
       }
+
+      :host([part="ellipsis-button"]) {
+        min-width: var(--lumo-button-size);
+        padding-left: calc(var(--lumo-button-size) / 4);
+        padding-right: calc(var(--lumo-button-size) / 4);
+      }
+
+      :host([part="ellipsis-button"]) [part="prefix"],
+      :host([part="ellipsis-button"]) [part="suffix"] {
+        margin-left: 0;
+        margin-right: 0;
+      }
     </style>
   </template>
 </dom-module>
