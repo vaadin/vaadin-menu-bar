@@ -140,10 +140,11 @@ This program is available under Apache License Version 2.0, available at https:/
     }
 
     _close() {
-      if (this._activeButton.hasAttribute('expanded')) {
+      if (this._activeButton && this._activeButton.hasAttribute('expanded')) {
         this._activeButton.removeAttribute('expanded');
       }
-      this._subMenu.close();
+
+      this._subMenu.opened && this._subMenu.close();
     }
   };
 </script>
