@@ -1,0 +1,138 @@
+<dom-module id="menu-bar-items-demos">
+  <template>
+    <style include="vaadin-component-demo-shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <h3>Disabled Items</h3>
+    <p>
+      Both menubar and submenu items can be marked as disabled by setting the <code>disabled</code> property on
+      the item object. Disabled items are excluded from the keyboard navigation. Clicking disabled item does not
+      select it, and neither closes nor opens submenu.
+    </p>
+    <vaadin-demo-snippet id="menu-bar-items-demos-disabled" when-defined="vaadin-menu-bar">
+      <template preserve-content>
+        <vaadin-menu-bar></vaadin-menu-bar>
+        <p>Selected item: <i></i></p>
+        <script>
+          window.addDemoReadyListener('#menu-bar-items-demos-disabled', function(document) {
+            const menu = document.querySelector('vaadin-menu-bar');
+            menu.addEventListener('item-selected', function(e) {
+              document.querySelector('i').textContent = JSON.stringify(e.detail.value);
+            });
+            menu.items = [
+              {
+                text: 'Project',
+                children: [{text: 'Manage'}, {text: 'Delete', disabled: true}]
+              },
+              {text: 'Permissions', disabled: true},
+              {text: 'Help'}
+            ];
+          });
+        </script>
+      </template>
+    </vaadin-demo-snippet>
+
+    <h3>Checkable Items</h3>
+    <p>
+      Submenu items can be marked as selected using the <code>checkable</code> and <code>checked</code> properties.
+      This does not apply to the menubar buttons. The checked state is expected to be toggled by the user.
+    </p>
+    <vaadin-demo-snippet id="menu-bar-items-demos-checkable" when-defined="vaadin-menu-bar">
+      <template preserve-content>
+        <vaadin-menu-bar></vaadin-menu-bar>
+        <p>Selected item: <i></i></p>
+        <script>
+          window.addDemoReadyListener('#menu-bar-items-demos-checkable', function(document) {
+            const menu = document.querySelector('vaadin-menu-bar');
+            menu.addEventListener('item-selected', function(e) {
+              const item = e.detail.value;
+              let msg = '';
+              if (item.checkable) {
+                item.checked = !item.checked;
+                msg = item.checked ? ' (on)' : ' (off)';
+              }
+              document.querySelector('i').textContent = e.detail.value.text + msg;
+            });
+            menu.items = [
+              {
+                text: 'Development',
+                children: [
+                  {text: 'Debug', checkable: true},
+                  {text: 'Logging', checkable: true, checked: true}
+                ]
+              },
+              {
+                text: 'Optimizations',
+                children: [
+                  {text: 'Compression', checkable: true},
+                  {text: 'Caching', checkable: true}
+                ]
+              },
+              {text: 'Help'}
+            ];
+          });
+        </script>
+      </template>
+    </vaadin-demo-snippet>
+
+    <h3>Using Components in Menubar Buttons</h3>
+    <p>
+      Item objects corresponding to menubar buttons support the <code>component</code> property.
+      It accepts two different types of values:
+    </p>
+    <ul>
+      <li><b>string</b> representing a tag name of HTML element to be created,</li>
+      <li><b>HTML element</b> created by the user to be placed inside the button.</li>
+    </ul>
+    <vaadin-demo-snippet id="menu-bar-items-demos-component" when-defined="vaadin-menu-bar">
+      <template preserve-content>
+        <vaadin-menu-bar></vaadin-menu-bar>
+        <p>Selected item: <i></i></p>
+        <script>
+          window.addDemoReadyListener('#menu-bar-items-demos-component', function(document) {
+            const menu = document.querySelector('vaadin-menu-bar');
+            menu.items = [
+              {component: 'b', text: 'Home'},
+              {
+                component: makeIcon('lumo:plus', 'New'),
+                children: [{text: 'New project'}, {text: 'New report'}]
+              },
+              {
+                component: makeIcon('lumo:bell'),
+                children: [{text: 'Notifications'}, {text: 'Mark as read'}]
+              }
+            ];
+            function makeIcon(img, txt) {
+              const span = window.document.createElement('span');
+              span.style.display = 'flex';
+              span.style.alignItems = 'center';
+              const icon = window.document.createElement('iron-icon');
+              icon.icon = img;
+              span.appendChild(icon);
+              if (txt) {
+                span.appendChild(window.document.createTextNode(txt));
+              }
+              return span;
+            }
+            menu.addEventListener('item-selected', function(e) {
+              document.querySelector('i').textContent = e.detail.value.text;
+            });
+          });
+        </script>
+      </template>
+    </vaadin-demo-snippet>
+
+
+  </template>
+  <script>
+    class MenuBarItemsDemos extends DemoReadyEventEmitter(MenuBarDemo(Polymer.Element)) {
+      static get is() {
+        return 'menu-bar-items-demos';
+      }
+    }
+    customElements.define(MenuBarItemsDemos.is, MenuBarItemsDemos);
+  </script>
+</dom-module>
