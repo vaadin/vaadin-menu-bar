@@ -6,19 +6,20 @@
       }
     </style>
 
-    <h3>Menubar</h3>
+    <h3>Menu Bar</h3>
     <p>
-      Menubar is a set of horizontally stacked buttons defined by the <code>items</code> property, which accepts an array
-      of objects. Each button can have a submenu defined by <code>children</code> sub-property of the item object. The
-      submenu items also provide nesting levels support.
+      Menu bar is a set of horizontally stacked buttons offering the user quick access to a consistent set of commands.
+      Buttons are defined by <code>items</code> property, which accepts an array of objects. Each button can toggle
+      a submenu defined by <code>children</code> sub-property of the item object. The submenu items can have children
+      of their own, creating additional levels of nested menus.
     </p>
     <p>
       By default, submenu can be opened on click and from keyboard, using <kbd>Enter</kbd>, <kbd>Space</kbd>,
-      <kbd>Up</kbd> and <kbd>Down</kbd> arrow keys. Keyboard navigation for menubar buttons and submenu items is
+      <kbd>Up</kbd> and <kbd>Down</kbd> arrow keys. Keyboard navigation for menu bar buttons and submenu items is
       implemented according to <a href="https://www.w3.org/TR/wai-aria-practices-1.1/#menu">WAI-ARIA Authoring Practices 1.1</a>.
     </p>
     <p>
-      When either a submenu item or menubar button without nested children is clicked, the <code>item-selected</code>
+      When either a submenu item or menu bar button without nested children is clicked, the <code>item-selected</code>
       event is fired with the event detail containing a <code>value</code>, which is a reference to the actual menu
       item object provided in the original <code>items</code> property.
     </p>
@@ -60,7 +61,7 @@
 
     <h3>Open on Hover</h3>
     <p>
-      When opened, submenu cal be switched by moving cursor over another button. Set <code>open-on-hover</code>
+      When opened, submenu can be switched by moving cursor over another button. Set <code>open-on-hover</code>
       attribute to also open the submenu on <i>mouseover</i> event instead of click. Submenu can always be
       closed by outside click, regardless of how it was opened.
     </p>
@@ -106,7 +107,7 @@
 
     <h3>Overflowing Buttons</h3>
     <p>
-      If there is not enough width to fit all the menubar, some buttons from the end are moved to submenu under
+      If there is not enough width to fit all the menu bar, some buttons from the end are moved to submenu under
       the "<i>ellipsis</i>" button. When resizing screen or browser window, changing device orientation etc, width is
       dynamically recalculated to always fit.
     </p>
