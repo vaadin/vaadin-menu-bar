@@ -45,8 +45,12 @@
     <h3>Checked Items</h3>
     <p>
       Submenu items can be configured to show a selection checkmark using the <code>checked</code> property.
-      This does not apply to menu bar buttons. Checked state is expected to be toggled by the user. Note, the
-      <code>canCheck</code> flag in the demo below is an arbitrary name.
+      This does not apply to menu bar buttons. Checked state is expected to be toggled by the user. You don't
+      have to call <code>render()</code> after toggling checked property.
+    </p>
+    <p>
+      Note, the <code>checkable</code> flag used in the example below is there just for the demo
+      and is not part of the items API.
     </p>
     <vaadin-demo-snippet id="menu-bar-items-demos-checkable" when-defined="vaadin-menu-bar">
       <template preserve-content>
@@ -58,7 +62,7 @@
             menu.addEventListener('item-selected', function(e) {
               const item = e.detail.value;
               let msg = '';
-              if (item.canCheck) {
+              if (item.checkable) {
                 item.checked = !item.checked;
                 msg = item.checked ? ' (on)' : ' (off)';
               }
@@ -68,15 +72,15 @@
               {
                 text: 'Development',
                 children: [
-                  {text: 'Debug', canCheck: true},
-                  {text: 'Logging', canCheck: true, checked: true}
+                  {text: 'Debug', checkable: true},
+                  {text: 'Logging', checkable: true, checked: true}
                 ]
               },
               {
                 text: 'Optimizations',
                 children: [
-                  {text: 'Compression', canCheck: true},
-                  {text: 'Caching', canCheck: true}
+                  {text: 'Compression', checkable: true},
+                  {text: 'Caching', checkable: true}
                 ]
               },
               {text: 'Help'}
