@@ -412,6 +412,14 @@
 
         expect(spy).to.be.not.called;
       });
+
+      it('should not close sub-menu on expanded button mouseover', async() => {
+        buttons[0].dispatchEvent(new CustomEvent('mouseover', {bubbles: true, composed: true}));
+        await nextRender(subMenu);
+        buttons[0].dispatchEvent(new CustomEvent('mouseover', {bubbles: true, composed: true}));
+        await nextRender(subMenu);
+        expect(subMenu.opened).to.be.true;
+      });
     });
 
     describe('accessibility', () => {
