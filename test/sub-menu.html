@@ -69,6 +69,18 @@
         }
       });
 
+      it('should set pointer events to `auto` when opened and remove when closed', async() => {
+        expect(menu.style.pointerEvents).to.be.empty;
+
+        buttons[0].click();
+        await nextRender(subMenu);
+        expect(menu.style.pointerEvents).to.equal('auto');
+
+        document.body.click();
+        await nextRender(subMenu);
+        expect(menu.style.pointerEvents).to.be.empty;
+      });
+
       it('should open sub-menu when button with nested items clicked', async() => {
         buttons[0].click();
         await nextRender(subMenu);
