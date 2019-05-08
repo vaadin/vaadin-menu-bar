@@ -200,11 +200,11 @@ This program is available under Apache License Version 2.0, available at https:/
       const getRect = () => this._expandedButton.getBoundingClientRect();
       if (overlay.hasAttribute('bottom-aligned')) {
         overlay.style.bottom = parseInt(getComputedStyle(overlay).bottom) + getRect().height + 'px';
-        this._subMenu.__y.eventOffset -= getRect().height;
+        this._subMenu.__y.eventOffset && (this._subMenu.__y.eventOffset -= getRect().height);
       }
       if (overlay.hasAttribute('right-aligned')) {
         overlay.style.right = parseInt(getComputedStyle(overlay).right) - getRect().width + 'px';
-        this._subMenu.__x.eventOffset += getRect().width;
+        this._subMenu.__x.eventOffset && (this._subMenu.__x.eventOffset += getRect().width);
       }
     }
 
