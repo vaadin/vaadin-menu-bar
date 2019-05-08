@@ -53,7 +53,7 @@ This program is available under Apache License Version 2.0, available at https:/
       this._subMenu.addEventListener('close-all-menus', this.__onEscapeClose.bind(this));
 
       const overlay = this._subMenu.$.overlay;
-      overlay.modeless = true;
+      overlay.modeless = false;
       overlay.addEventListener('keydown', this.__boundOnContextMenuKeydown);
       overlay.addEventListener('vaadin-overlay-open', this.__alignOverlayPosition.bind(this));
 
@@ -200,9 +200,11 @@ This program is available under Apache License Version 2.0, available at https:/
       const getRect = () => this._expandedButton.getBoundingClientRect();
       if (overlay.hasAttribute('bottom-aligned')) {
         overlay.style.bottom = parseInt(getComputedStyle(overlay).bottom) + getRect().height + 'px';
+        this._subMenu.__y.eventOffset -= getRect().height;
       }
       if (overlay.hasAttribute('right-aligned')) {
         overlay.style.right = parseInt(getComputedStyle(overlay).right) - getRect().width + 'px';
+        this._subMenu.__x.eventOffset += getRect().width;
       }
     }
 
@@ -279,6 +281,7 @@ This program is available under Apache License Version 2.0, available at https:/
     }
 
     __openSubMenu(button, event, options = {}) {
+      this.style.pointerEvents = 'auto';
       const subMenu = this._subMenu;
       const item = button.item;
 
