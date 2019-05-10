@@ -196,8 +196,7 @@ This program is available under Apache License Version 2.0, available at https:/
 
     __alignOverlayPosition(e) {
       const overlay = e.target;
-      const getRect = () => this._expandedButton.getBoundingClientRect();
-      const {width, height} = getRect();
+      const {width, height} = this._expandedButton.getBoundingClientRect();
       if (overlay.hasAttribute('bottom-aligned')) {
         overlay.style.bottom = parseInt(getComputedStyle(overlay).bottom) + height + 'px';
       }
@@ -279,7 +278,6 @@ This program is available under Apache License Version 2.0, available at https:/
     }
 
     __openSubMenu(button, event, options = {}) {
-      this.style.pointerEvents = 'auto';
       const subMenu = this._subMenu;
       const item = button.item;
 
@@ -343,6 +341,7 @@ This program is available under Apache License Version 2.0, available at https:/
     }
 
     __onceOpened(cb) {
+      this.style.pointerEvents = 'auto';
       const overlay = this._subMenu.$.overlay;
       const listener = () => {
         cb();
