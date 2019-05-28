@@ -36,9 +36,9 @@ This program is available under Apache License Version 2.0, available at https:/
       close() {
         super.close();
 
-        const host = this.getRootNode().host;
-        if (host && host.tagName.toLowerCase() === 'vaadin-menu-bar') {
-          host._close();
+        // only handle 1st level submenu
+        if (this.hasAttribute('is-root')) {
+          this.getRootNode().host._close();
         }
       }
     }
