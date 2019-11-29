@@ -87,6 +87,14 @@
         expect(subMenu.opened).to.be.false;
       });
 
+      it('should close sub-menu when menu is detached', async() => {
+        buttons[0].click();
+        await nextRender(subMenu);
+        expect(subMenu.opened).to.be.true;
+        menu.parentNode.removeChild(menu);
+        expect(subMenu.opened).to.be.false;
+      });
+
       it('should reopen sub-menu when different button with nested items clicked', async() => {
         buttons[0].click();
         await nextRender(subMenu);

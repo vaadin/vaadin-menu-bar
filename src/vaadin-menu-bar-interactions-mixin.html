@@ -75,6 +75,7 @@ This program is available under Apache License Version 2.0, available at https:/
     disconnectedCallback() {
       super.disconnectedCallback();
       document.removeEventListener('click', this.__boundOutsideClickListener, true);
+      this._close();
     }
 
     _themeChanged(theme) {
