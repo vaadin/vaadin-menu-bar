@@ -658,8 +658,6 @@
         await nextRender(menu);
         subMenu = menu._subMenu;
         buttons = menu._buttons;
-        // simulate mobile & touch events
-        subMenu._touch = true;
         window.top.document.querySelector('#subsuites').style.width = '400px';
       });
 
