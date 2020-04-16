@@ -111,14 +111,11 @@ This program is available under Apache License Version 2.0, available at https:/
           this._subMenu.close();
         }
 
-        let visibleButtonsWidth = 0;
-
         for (let i = 0; i < buttons.length; i++) {
           const btn = buttons[i];
           const btnWidth = btn.getBoundingClientRect().width;
 
           if (getComputedStyle(btn).visibility !== 'hidden') {
-            visibleButtonsWidth += btnWidth;
             continue;
           }
 
@@ -126,7 +123,7 @@ This program is available under Apache License Version 2.0, available at https:/
 
           if (
             (!isRTL && (overflow.offsetLeft + overflow.offsetWidth + btnWidth) < containerWidth) ||
-            (isRTL && (btnWidth + overflow.offsetWidth + visibleButtonsWidth) < containerWidth)
+            (isRTL && (btnWidth < overflow.offsetLeft))
           ) {
             btn.disabled = btn.item.disabled;
             btn.style.visibility = '';
