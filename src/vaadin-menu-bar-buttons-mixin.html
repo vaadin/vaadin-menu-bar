@@ -89,7 +89,6 @@ This program is available under Apache License Version 2.0, available at https:/
           }
 
           const btnWidth = btn.offsetWidth;
-
           if (
             (!isRTL && (btn.offsetLeft + btnWidth) < (containerWidth - overflow.offsetWidth)) ||
             (isRTL && btn.offsetLeft >= overflow.offsetWidth)
@@ -118,7 +117,7 @@ This program is available under Apache License Version 2.0, available at https:/
           if (getComputedStyle(btn).visibility !== 'hidden') {
             continue;
           }
-  
+
           if (
             (!isRTL && (overflow.offsetLeft + overflow.offsetWidth + btnWidth) < containerWidth) ||
             (isRTL && (btnWidth < overflow.offsetLeft))
