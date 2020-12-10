@@ -1,5 +1,10 @@
 {
+  "name": "@vaadin/vaadin-menu-bar",
+  "version": "1.2.1",
   "description": "vaadin-menu-bar",
+  "main": "vaadin-menu-bar.js",
+  "module": "vaadin-menu-bar.js",
+  "repository": "vaadin/vaadin-menu-bar",
   "keywords": [
     "Vaadin",
     "vaadin-menu-bar",
@@ -7,16 +12,12 @@
     "web-component",
     "polymer"
   ],
-  "repository": "vaadin/vaadin-menu-bar",
-  "homepage": "https://vaadin.com/components",
-  "name": "@vaadin/vaadin-menu-bar",
-  "version": "1.2.1",
-  "main": "vaadin-menu-bar.js",
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/vaadin/vaadin-menu-bar/issues"
   },
+  "homepage": "https://vaadin.com/components",
   "files": [
     "vaadin-*.d.ts",
     "vaadin-*.js",
@@ -24,15 +25,6 @@
     "src",
     "theme"
   ],
-  "resolutions": {
-    "@webcomponents/webcomponentsjs": "2.2.0",
-    "es-abstract": "1.17.6",
-    "@types/doctrine": "0.0.3",
-    "inherits": "2.0.3",
-    "samsam": "1.1.3",
-    "supports-color": "3.1.2",
-    "type-detect": "1.0.0"
-  },
   "dependencies": {
     "@polymer/polymer": "^3.0.0",
     "@polymer/iron-resizable-behavior": "^3.0.0",
