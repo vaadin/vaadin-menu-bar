@@ -1,6 +1,7 @@
-<link rel="import" href="../../../vaadin-material-styles/typography.html">
+import '@vaadin/vaadin-material-styles/typography.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 
-<dom-module id="material-menu-bar-item" theme-for="vaadin-context-menu-item">
+const $_documentContainer = html`<dom-module id="material-menu-bar-item" theme-for="vaadin-context-menu-item">
   <template>
     <style>
       :host([theme="menu-bar-item"]) [part="content"] {
@@ -19,4 +20,6 @@
       }
     </style>
   </template>
-</dom-module>
+</dom-module>`;
+
+document.head.appendChild($_documentContainer.content);

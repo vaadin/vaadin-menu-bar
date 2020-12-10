@@ -3,22 +3,22 @@
 <head lang="en">
   <meta charset="UTF-8">
 
-  <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="../../../iron-test-helpers/mock-interactions.js"></script>
+  <script src="../../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="../../../../@polymer/iron-test-helpers/mock-interactions.js" type="module"></script>
   <script src="../helpers.js"></script>
-  <script>
-    const theme = window.location.search.replace(/.*theme=(\w+).*/, '$1') || 'lumo';
-    document.write(`<link rel="import" href="../../theme/${theme}/vaadin-menu-bar.html">`);
+  <script type="module">
+import '@vaadin/vaadin-lumo-styles/icons.js';
+import '@polymer/iron-icon/iron-icon.js';
+const theme = window.location.search.replace(/.*theme=(\w+).*/, '$1') || 'lumo';
+document.write(`<link rel="import" href="../../theme/${theme}/vaadin-menu-bar.html">`);
 
-    window.addEventListener('WebComponentsReady', function() {
-      setTimeout(function() {
-        window.ShadyDOM && window.ShadyDOM.flush(); // Force DOM composition
-        window.webComponentsAreReady = true; // Checked in gemini before capture callback
-      });
-    });
-  </script>
-  <link rel="import" href="../../../vaadin-lumo-styles/icons.html">
-  <link rel="import" href="../../../iron-icon/iron-icon.html">
+setTimeout(function() {
+  window.ShadyDOM && window.ShadyDOM.flush(); // Force DOM composition
+  window.webComponentsAreReady = true; // Checked in gemini before capture callback
+});
+</script>
+  <script type="module" src="../../../../@vaadin/vaadin-lumo-styles/icons.js"></script>
+  <script type="module" src="../../../../@polymer/iron-icon/iron-icon.js"></script>
   <style>
     /* Force the overflow */
     #theme-tests {
@@ -35,50 +35,52 @@
     <vaadin-menu-bar></vaadin-menu-bar>
   </div>
 
-  <script>
-    function makeIcon(img) {
-      const item = window.document.createElement('vaadin-context-menu-item');
-      const icon = window.document.createElement('iron-icon');
-      icon.setAttribute('icon', img);
-      item.appendChild(icon);
-      item.setAttribute('theme', 'menu-bar-item');
-      return item;
-    }
+  <script type="module">
+import '@vaadin/vaadin-lumo-styles/icons.js';
+import '@polymer/iron-icon/iron-icon.js';
+function makeIcon(img) {
+  const item = window.document.createElement('vaadin-context-menu-item');
+  const icon = window.document.createElement('iron-icon');
+  icon.setAttribute('icon', img);
+  item.appendChild(icon);
+  item.setAttribute('theme', 'menu-bar-item');
+  return item;
+}
 
-    const menu = document.querySelector('vaadin-menu-bar');
+const menu = document.querySelector('vaadin-menu-bar');
 
-    const variant = window.location.search.replace(/.*variant=([-\w]+).*/, '$1') || '';
-    menu.setAttribute('theme', variant);
+const variant = window.location.search.replace(/.*variant=([-\w]+).*/, '$1') || '';
+menu.setAttribute('theme', variant);
 
-    // Force overflow for tertiary and tertiary-inline
-    if (variant === 'tertiary' || variant === 'small') {
-      menu.parentElement.style.width = '265px';
-    } else if (variant === 'tertiary-inline') {
-      menu.parentElement.style.width = '200px';
-    }
+// Force overflow for tertiary and tertiary-inline
+if (variant === 'tertiary' || variant === 'small') {
+  menu.parentElement.style.width = '265px';
+} else if (variant === 'tertiary-inline') {
+  menu.parentElement.style.width = '200px';
+}
 
-    menu.items = [
-      {component: 'u', text: 'Home'},
-      {
-        component: makeIcon('lumo:chevron-down'),
-        children: [{text: 'Notifications'}, {text: 'Mark as read'}]
-      },
-      {text: 'Manage', disabled: true},
-      {
-        text: 'Reports',
-        children: [
-          {text: 'View Reports'},
-          {text: 'Generate Report'}
-        ]
-      },
-      {text: 'Help'}
-    ];
+menu.items = [
+  {component: 'u', text: 'Home'},
+  {
+    component: makeIcon('lumo:chevron-down'),
+    children: [{text: 'Notifications'}, {text: 'Mark as read'}]
+  },
+  {text: 'Manage', disabled: true},
+  {
+    text: 'Reports',
+    children: [
+      {text: 'View Reports'},
+      {text: 'Generate Report'}
+    ]
+  },
+  {text: 'Help'}
+];
 
-    // eslint-disable-next-line no-unused-vars
-    function openSubMenu() {
-      // open on Arrow Down to make sure the submenu item is focused
-      arrowDown(menu.shadowRoot.querySelectorAll('vaadin-menu-bar-button')[1]);
-    }
+// eslint-disable-next-line no-unused-vars
+function openSubMenu() {
+  // open on Arrow Down to make sure the submenu item is focused
+  arrowDown(menu.shadowRoot.querySelectorAll('vaadin-menu-bar-button')[1]);
+}
   </script>
 
 </body>

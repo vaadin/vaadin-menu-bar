@@ -1,6 +1,7 @@
-<link rel="import" href="../../../vaadin-button/theme/material/vaadin-button-styles.html">
+import '@vaadin/vaadin-button/theme/material/vaadin-button-styles.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 
-<dom-module id="material-menu-bar-button" theme-for="vaadin-menu-bar-button">
+const $_documentContainer = html`<dom-module id="material-menu-bar-button" theme-for="vaadin-menu-bar-button">
   <template>
     <style include="material-button">
       [part="label"] {
@@ -106,4 +107,6 @@
       }
     </style>
   </template>
-</dom-module>
+</dom-module>`;
+
+document.head.appendChild($_documentContainer.content);

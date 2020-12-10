@@ -1,6 +1,7 @@
-<link rel="import" href="../../../vaadin-button/theme/lumo/vaadin-button-styles.html">
+import '@vaadin/vaadin-button/theme/lumo/vaadin-button-styles.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 
-<dom-module id="lumo-menu-bar-button" theme-for="vaadin-menu-bar-button">
+const $_documentContainer = html`<dom-module id="lumo-menu-bar-button" theme-for="vaadin-menu-bar-button">
   <template>
     <style include="lumo-button">
       :host {
@@ -115,4 +116,6 @@
       }
     </style>
   </template>
-</dom-module>
+</dom-module>`;
+
+document.head.appendChild($_documentContainer.content);
