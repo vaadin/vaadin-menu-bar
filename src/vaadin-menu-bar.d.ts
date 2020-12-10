@@ -1,5 +1,3 @@
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
-
 import {ThemableMixin} from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
 
 import {ElementMixin} from '@vaadin/vaadin-element-mixin/vaadin-element-mixin.js';
@@ -7,8 +5,6 @@ import {ElementMixin} from '@vaadin/vaadin-element-mixin/vaadin-element-mixin.js
 import {ButtonsMixin} from './vaadin-menu-bar-buttons-mixin.js';
 
 import {InteractionsMixin} from './vaadin-menu-bar-interactions-mixin.js';
-
-import {html} from '@polymer/polymer/lib/utils/html-tag.js';
 
 /**
  * `<vaadin-menu-bar>` is a Web Component providing a set of horizontally stacked buttons offering
@@ -44,7 +40,7 @@ declare class MenuBarElement extends
   InteractionsMixin(
   ElementMixin(
   ThemableMixin(
-  PolymerElement)))) {
+  HTMLElement)))) {
 
   /**
    * Defines a hierarchical structure, where root level items represent menu bar buttons,
