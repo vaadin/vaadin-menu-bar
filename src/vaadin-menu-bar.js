@@ -40,6 +40,8 @@ import './vaadin-menu-bar-button.js';
  *
  * See [ThemableMixin – how to apply styles for shadow parts](https://github.com/vaadin/vaadin-themable-mixin/wiki)
  *
+ * @fires {CustomEvent<boolean>} item-selected - Fired when a submenu item or menu bar button without children is clicked.
+ *
  * @extends HTMLElement
  * @mixes ButtonsMixin
  * @mixes InteractionsMixin

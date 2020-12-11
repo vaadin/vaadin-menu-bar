@@ -6,7 +6,7 @@ import { ButtonsMixin } from './vaadin-menu-bar-buttons-mixin.js';
 
 import { InteractionsMixin } from './vaadin-menu-bar-interactions-mixin.js';
 
-import { MenuBarItem } from './interfaces';
+import { MenuBarEventMap, MenuBarItem } from './interfaces';
 
 /**
  * `<vaadin-menu-bar>` is a Web Component providing a set of horizontally stacked buttons offering
@@ -36,6 +36,8 @@ import { MenuBarItem } from './interfaces';
  * `overflow-button` | The "overflow" button appearing when menu bar width is not enough to fit all the buttons.
  *
  * See [ThemableMixin – how to apply styles for shadow parts](https://github.com/vaadin/vaadin-themable-mixin/wiki)
+ *
+ * @fires {CustomEvent} item-selected - Fired when a submenu item or menu bar button without children is clicked.
  */
 declare class MenuBarElement extends ButtonsMixin(InteractionsMixin(ElementMixin(ThemableMixin(HTMLElement)))) {
   /**
@@ -67,6 +69,18 @@ declare class MenuBarElement extends ButtonsMixin(InteractionsMixin(ElementMixin
    * ```
    */
   items: MenuBarItem[];
+
+  addEventListener<K extends keyof MenuBarEventMap>(
+    type: K,
+    listener: (this: MenuBarElement, ev: MenuBarEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+
+  removeEventListener<K extends keyof MenuBarEventMap>(
+    type: K,
+    listener: (this: MenuBarElement, ev: MenuBarEventMap[K]) => void,
+    options?: boolean | EventListenerOptions
+  ): void;
 }
 
 declare global {
