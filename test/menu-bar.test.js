@@ -1,41 +1,15 @@
-<!doctype html>
-
-<head>
-  <meta charset="UTF-8">
-  <title>vaadin-menu-bar tests</title>
-  <script src="../../../wct-browser-legacy/browser.js"></script>
-  <script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="../../../@polymer/iron-test-helpers/mock-interactions.js" type="module"></script>
-  <script src="./helpers.js"></script>
-  <script type="module" src="../../../@polymer/test-fixture/test-fixture.js"></script>
-  <script type="module" src="../../../@polymer/polymer/lib/utils/render-status.js"></script>
-  <script type="module" src="../vaadin-menu-bar.js"></script>
-</head>
-
-<body>
-  <test-fixture id="default">
-    <template>
-      <vaadin-menu-bar></vaadin-menu-bar>
-    </template>
-  </test-fixture>
-
-  <script type="module">
-import '@polymer/test-fixture/test-fixture.js';
-import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { expect } from '@esm-bundle/chai';
+import sinon from 'sinon';
+import { fixtureSync } from '@open-wc/testing-helpers';
+import { arrowLeft, arrowRight, end, home, nextRender } from './helpers.js';
+import './not-animated-styles.js';
 import '../vaadin-menu-bar.js';
-function nextRender(target) {
-  return new Promise(resolve => {
-    afterNextRender(target, () => {
-      resolve();
-    });
-  });
-}
 
 describe('custom element definition', () => {
   let menu;
 
   beforeEach(() => {
-    menu = fixture('default');
+    menu = fixtureSync('<vaadin-menu-bar></vaadin-menu-bar>');
   });
 
   it('should be defined with correct tag name', () => {
@@ -54,14 +28,9 @@ describe('custom element definition', () => {
 describe('root menu layout', () => {
   let menu, buttons;
 
-  beforeEach(async() => {
-    menu = fixture('default');
-    menu.items = [
-      {text: 'Item 1'},
-      {text: 'Item 2'},
-      {text: 'Item 3', disabled: true},
-      {text: 'Item 4'}
-    ];
+  beforeEach(async () => {
+    menu = fixtureSync('<vaadin-menu-bar></vaadin-menu-bar>');
+    menu.items = [{ text: 'Item 1' }, { text: 'Item 2' }, { text: 'Item 3', disabled: true }, { text: 'Item 4' }];
     await nextRender(menu);
     buttons = menu._buttons;
   });
@@ -87,9 +56,9 @@ describe('root menu layout', () => {
   });
 
   it('should set tabindex to -1 to all the buttons except first one', () => {
-    menu.dispatchEvent(new CustomEvent('focusin', {bubbles: true, composed: true}));
+    menu.dispatchEvent(new CustomEvent('focusin', { bubbles: true, composed: true }));
     expect(buttons[0].getAttribute('tabindex')).to.equal('0');
-    buttons.slice(1).forEach(btn => {
+    buttons.slice(1).forEach((btn) => {
       expect(btn.focusElement.getAttribute('tabindex')).to.equal('-1');
     });
   });
@@ -104,7 +73,7 @@ describe('root menu layout', () => {
         buttons[0].focus();
         const spy = sinon.spy(buttons[1], 'focus');
         arrowRight(buttons[0]);
-        expect(spy).to.be.calledOnce;
+        expect(spy.calledOnce).to.be.true;
         expect(buttons[1].hasAttribute('focused')).to.be.true;
       });
 
@@ -112,7 +81,7 @@ describe('root menu layout', () => {
         buttons[1].focus();
         const spy = sinon.spy(buttons[0], 'focus');
         arrowLeft(buttons[1]);
-        expect(spy).to.be.calledOnce;
+        expect(spy.calledOnce).to.be.true;
         expect(buttons[0].hasAttribute('focused')).to.be.true;
       });
 
@@ -120,7 +89,7 @@ describe('root menu layout', () => {
         buttons[1].focus();
         const spy = sinon.spy(buttons[0], 'focus');
         home(buttons[1]);
-        expect(spy).to.be.calledOnce;
+        expect(spy.calledOnce).to.be.true;
         expect(buttons[0].hasAttribute('focused')).to.be.true;
       });
 
@@ -131,7 +100,7 @@ describe('root menu layout', () => {
         buttons[3].focus();
         const spy = sinon.spy(buttons[1], 'focus');
         home(buttons[3]);
-        expect(spy).to.be.calledOnce;
+        expect(spy.calledOnce).to.be.true;
         expect(buttons[1].hasAttribute('focused')).to.be.true;
       });
 
@@ -139,7 +108,7 @@ describe('root menu layout', () => {
         buttons[0].focus();
         const spy = sinon.spy(buttons[3], 'focus');
         end(buttons[0]);
-        expect(spy).to.be.calledOnce;
+        expect(spy.calledOnce).to.be.true;
         expect(buttons[3].hasAttribute('focused')).to.be.true;
       });
 
@@ -150,7 +119,7 @@ describe('root menu layout', () => {
         buttons[0].focus();
         const spy = sinon.spy(buttons[1], 'focus');
         end(buttons[0]);
-        expect(spy).to.be.calledOnce;
+        expect(spy.calledOnce).to.be.true;
         expect(buttons[1].hasAttribute('focused')).to.be.true;
       });
 
@@ -158,7 +127,7 @@ describe('root menu layout', () => {
         buttons[3].focus();
         const spy = sinon.spy(buttons[0], 'focus');
         arrowRight(buttons[3]);
-        expect(spy).to.be.calledOnce;
+        expect(spy.calledOnce).to.be.true;
         expect(buttons[0].hasAttribute('focused')).to.be.true;
       });
 
@@ -166,7 +135,7 @@ describe('root menu layout', () => {
         buttons[0].focus();
         const spy = sinon.spy(buttons[3], 'focus');
         arrowLeft(buttons[0]);
-        expect(spy).to.be.calledOnce;
+        expect(spy.calledOnce).to.be.true;
         expect(buttons[3].hasAttribute('focused')).to.be.true;
       });
     });
@@ -180,7 +149,7 @@ describe('root menu layout', () => {
         buttons[0].focus();
         const spy = sinon.spy(buttons[1], 'focus');
         arrowLeft(buttons[0]);
-        expect(spy).to.be.calledOnce;
+        expect(spy.calledOnce).to.be.true;
         expect(buttons[1].hasAttribute('focused')).to.be.true;
       });
 
@@ -188,7 +157,7 @@ describe('root menu layout', () => {
         buttons[1].focus();
         const spy = sinon.spy(buttons[0], 'focus');
         arrowRight(buttons[1]);
-        expect(spy).to.be.calledOnce;
+        expect(spy.calledOnce).to.be.true;
         expect(buttons[0].hasAttribute('focused')).to.be.true;
       });
 
@@ -196,7 +165,7 @@ describe('root menu layout', () => {
         buttons[3].focus();
         const spy = sinon.spy(buttons[0], 'focus');
         arrowLeft(buttons[3]);
-        expect(spy).to.be.calledOnce;
+        expect(spy.calledOnce).to.be.true;
         expect(buttons[0].hasAttribute('focused')).to.be.true;
       });
 
@@ -204,7 +173,7 @@ describe('root menu layout', () => {
         buttons[0].focus();
         const spy = sinon.spy(buttons[3], 'focus');
         arrowRight(buttons[0]);
-        expect(spy).to.be.calledOnce;
+        expect(spy.calledOnce).to.be.true;
         expect(buttons[3].hasAttribute('focused')).to.be.true;
       });
     });
@@ -213,37 +182,32 @@ describe('root menu layout', () => {
   describe('updating items', () => {
     it('should remove buttons when setting empty array', () => {
       menu.items = [];
-      expect(menu._buttons.filter(b => b !== menu._overflow).length).to.eql(0);
+      expect(menu._buttons.filter((b) => b !== menu._overflow).length).to.eql(0);
     });
 
     it('should remove buttons when setting falsy items property', () => {
       menu.items = undefined;
-      expect(menu._buttons.filter(b => b !== menu._overflow).length).to.eql(0);
+      expect(menu._buttons.filter((b) => b !== menu._overflow).length).to.eql(0);
     });
   });
 
   describe('theme attribute', () => {
     it('should propagate theme attribute to all internal buttons', () => {
       menu.setAttribute('theme', 'contained');
-      buttons.forEach(btn =>
-        expect(btn.getAttribute('theme')).to.equal('contained'));
+      buttons.forEach((btn) => expect(btn.getAttribute('theme')).to.equal('contained'));
     });
 
-    it('should propagate theme attribute to added buttons', done => {
+    it('should propagate theme attribute to added buttons', async () => {
       menu.setAttribute('theme', 'contained');
-      menu.unshift('items', {text: 'new'});
-      afterNextRender(menu, () => {
-        buttons.forEach(btn =>
-          expect(btn.getAttribute('theme')).to.equal('contained'));
-        done();
-      });
+      menu.unshift('items', { text: 'new' });
+      await nextRender(menu);
+      buttons.forEach((btn) => expect(btn.getAttribute('theme')).to.equal('contained'));
     });
 
     it('should remove theme attribute from internal buttons when it is removed from host', () => {
       menu.setAttribute('theme', 'contained');
       menu.removeAttribute('theme');
-      buttons.forEach(btn =>
-        expect(btn.hasAttribute('theme')).to.be.false);
+      buttons.forEach((btn) => expect(btn.hasAttribute('theme')).to.be.false);
     });
   });
 });
@@ -251,29 +215,29 @@ describe('root menu layout', () => {
 describe('overflow button', () => {
   let menu, buttons, overflow;
 
-  const assertHidden = elem => {
+  const assertHidden = (elem) => {
     const style = getComputedStyle(elem);
     expect(style.visibility).to.equal('hidden');
     expect(style.position).to.equal('absolute');
   };
 
-  const assertVisible = elem => {
+  const assertVisible = (elem) => {
     const style = getComputedStyle(elem);
     expect(style.visibility).to.equal('visible');
     expect(style.position).to.not.equal('absolute');
   };
 
-  beforeEach(async() => {
-    menu = fixture('default');
+  beforeEach(async () => {
+    menu = fixtureSync('<vaadin-menu-bar></vaadin-menu-bar>');
 
     menu.style.width = '250px';
 
     menu.items = [
-      {text: 'Item 1'},
-      {text: 'Item 2'},
-      {text: 'Item 3'},
-      {text: 'Item 4'},
-      {text: 'Item 5', disabled: true}
+      { text: 'Item 1' },
+      { text: 'Item 2' },
+      { text: 'Item 3' },
+      { text: 'Item 4' },
+      { text: 'Item 5', disabled: true }
     ];
     await nextRender(menu);
     buttons = menu._buttons;
@@ -289,8 +253,8 @@ describe('overflow button', () => {
   });
 
   it('should set items to overflow button for buttons which do not fit', () => {
-    expect(overflow.item).to.be.an.object;
-    expect(overflow.item.children).to.be.an.array;
+    expect(overflow.item).to.be.instanceOf(Object);
+    expect(overflow.item.children).to.be.instanceOf(Array);
     expect(overflow.item.children.length).to.equal(3);
     expect(overflow.item.children[0]).to.deep.equal(menu.items[2]);
     expect(overflow.item.children[1]).to.deep.equal(menu.items[3]);
@@ -302,80 +266,70 @@ describe('overflow button', () => {
     expect(overflow.hasAttribute('hidden')).to.be.false;
   });
 
-  it('should show buttons and update overflow items when width increased', done => {
+  it('should show buttons and update overflow items when width increased', async () => {
     menu.style.width = '350px';
     menu.notifyResize();
-    afterNextRender(menu, () => {
-      assertVisible(buttons[2]);
-      expect(buttons[2].disabled).to.not.be.true;
-      assertVisible(buttons[3]);
-      expect(buttons[3].disabled).to.not.be.true;
-      expect(overflow.item.children.length).to.equal(1);
-      expect(overflow.item.children[0]).to.deep.equal(menu.items[4]);
-      done();
-    });
+    await nextRender(menu);
+    assertVisible(buttons[2]);
+    expect(buttons[2].disabled).to.not.be.true;
+    assertVisible(buttons[3]);
+    expect(buttons[3].disabled).to.not.be.true;
+    expect(overflow.item.children.length).to.equal(1);
+    expect(overflow.item.children[0]).to.deep.equal(menu.items[4]);
   });
 
-  it('should show buttons and update overflow items when width increased in RTL', done => {
+  it('should show buttons and update overflow items when width increased in RTL', async () => {
     menu.setAttribute('dir', 'rtl');
     menu.style.width = '350px';
     menu.notifyResize();
-    afterNextRender(menu, () => {
-      assertVisible(buttons[2]);
-      expect(buttons[2].disabled).to.not.be.true;
-      assertVisible(buttons[3]);
-      expect(buttons[3].disabled).to.not.be.true;
-      expect(overflow.item.children.length).to.equal(1);
-      expect(overflow.item.children[0]).to.deep.equal(menu.items[4]);
-      done();
-    });
+    await nextRender(menu);
+    assertVisible(buttons[2]);
+    expect(buttons[2].disabled).to.not.be.true;
+    assertVisible(buttons[3]);
+    expect(buttons[3].disabled).to.not.be.true;
+    expect(overflow.item.children.length).to.equal(1);
+    expect(overflow.item.children[0]).to.deep.equal(menu.items[4]);
   });
 
-  it('should hide buttons and update overflow items when width decreased', done => {
+  it('should hide buttons and update overflow items when width decreased', async () => {
     menu.style.width = '150px';
     menu.notifyResize();
-    afterNextRender(menu, () => {
-      assertHidden(buttons[1]);
-      expect(buttons[1].disabled).to.be.true;
-      expect(overflow.item.children.length).to.equal(4);
-      expect(overflow.item.children[0]).to.deep.equal(menu.items[1]);
-      expect(overflow.item.children[1]).to.deep.equal(menu.items[2]);
-      expect(overflow.item.children[2]).to.deep.equal(menu.items[3]);
-      expect(overflow.item.children[3]).to.deep.equal(menu.items[4]);
-      done();
-    });
+    await nextRender(menu);
+    assertHidden(buttons[1]);
+    expect(buttons[1].disabled).to.be.true;
+    expect(overflow.item.children.length).to.equal(4);
+    expect(overflow.item.children[0]).to.deep.equal(menu.items[1]);
+    expect(overflow.item.children[1]).to.deep.equal(menu.items[2]);
+    expect(overflow.item.children[2]).to.deep.equal(menu.items[3]);
+    expect(overflow.item.children[3]).to.deep.equal(menu.items[4]);
   });
 
-  it('should hide buttons and update overflow items when width decreased in RTL', done => {
+  it('should hide buttons and update overflow items when width decreased in RTL', async () => {
     menu.setAttribute('dir', 'rtl');
     menu.style.width = '150px';
     menu.notifyResize();
-    afterNextRender(menu, () => {
-      assertHidden(buttons[1]);
-      expect(buttons[1].disabled).to.be.true;
-      expect(overflow.item.children.length).to.equal(4);
-      expect(overflow.item.children[0]).to.deep.equal(menu.items[1]);
-      expect(overflow.item.children[1]).to.deep.equal(menu.items[2]);
-      expect(overflow.item.children[2]).to.deep.equal(menu.items[3]);
-      expect(overflow.item.children[3]).to.deep.equal(menu.items[4]);
-      done();
-    });
+    await nextRender(menu);
+    assertHidden(buttons[1]);
+    expect(buttons[1].disabled).to.be.true;
+    expect(overflow.item.children.length).to.equal(4);
+    expect(overflow.item.children[0]).to.deep.equal(menu.items[1]);
+    expect(overflow.item.children[1]).to.deep.equal(menu.items[2]);
+    expect(overflow.item.children[2]).to.deep.equal(menu.items[3]);
+    expect(overflow.item.children[3]).to.deep.equal(menu.items[4]);
   });
 
-  it('should hide overflow button and reset its items when all buttons fit', done => {
+  it('should hide overflow button and reset its items when all buttons fit', async () => {
     menu.style.width = 'auto';
     menu.notifyResize();
-    afterNextRender(menu, () => {
-      assertVisible(buttons[2]);
-      expect(buttons[2].disabled).to.not.be.true;
-      assertVisible(buttons[3]);
-      expect(buttons[3].disabled).to.not.be.true;
-      assertVisible(buttons[4]);
-      expect(buttons[4].disabled).to.be.true;
-      expect(overflow.hasAttribute('hidden')).to.be.true;
-      expect(overflow.item.children.length).to.equal(0);
-      done();
-    });
+    await nextRender(menu);
+    assertVisible(buttons[2]);
+    expect(buttons[2].disabled).to.not.be.true;
+    assertVisible(buttons[3]);
+    expect(buttons[3].disabled).to.not.be.true;
+    assertVisible(buttons[4]);
+    expect(buttons[4].disabled).to.be.true;
+    expect(overflow.hasAttribute('hidden')).to.be.true;
+    expect(overflow.item.children.length).to.equal(0);
   });
 });
 
@@ -389,14 +343,14 @@ describe('item components', () => {
     return div;
   }
 
-  beforeEach(async() => {
-    menu = fixture('default');
+  beforeEach(async () => {
+    menu = fixtureSync('<vaadin-menu-bar></vaadin-menu-bar>');
     menu.items = [
-      {text: 'Item 1'},
-      {text: 'Item 2'},
-      {component: makeComponent('3')},
-      {text: 'Item 4 text', component: makeComponent('4')},
-      {text: 'Item 5', component: document.createElement('vaadin-context-menu-item')}
+      { text: 'Item 1' },
+      { text: 'Item 2' },
+      { component: makeComponent('3') },
+      { text: 'Item 4 text', component: makeComponent('4') },
+      { text: 'Item 5', component: document.createElement('vaadin-context-menu-item') }
     ];
     await nextRender(menu);
     buttons = menu._buttons;
@@ -432,7 +386,7 @@ describe('item components', () => {
     expect(buttons[4].item.component.textContent).to.equal('Item 5');
   });
 
-  it('should teleport the same component to overflow sub-menu and back', async() => {
+  it('should teleport the same component to overflow sub-menu and back', async () => {
     menu.style.width = '250px';
     menu.notifyResize();
     await nextRender(menu);
@@ -452,7 +406,7 @@ describe('item components', () => {
     expect(item.classList.contains('vaadin-menu-item')).to.be.false;
   });
 
-  it('should close the overflow sub-menu on resize', async() => {
+  it('should close the overflow sub-menu on resize', async () => {
     menu.style.width = '150px';
     menu.notifyResize();
     await nextRender(menu);
@@ -472,5 +426,3 @@ describe('item components', () => {
     expect(Number(style.zIndex)).to.equal(1);
   });
 });
-</script>
-</body>
