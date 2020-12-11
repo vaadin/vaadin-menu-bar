@@ -6,6 +6,8 @@ import { ButtonsMixin } from './vaadin-menu-bar-buttons-mixin.js';
 
 import { InteractionsMixin } from './vaadin-menu-bar-interactions-mixin.js';
 
+import { MenuBarItem } from './interfaces';
+
 /**
  * `<vaadin-menu-bar>` is a Web Component providing a set of horizontally stacked buttons offering
  * the user quick access to a consistent set of commands. Each button can toggle a submenu with
@@ -74,5 +76,3 @@ declare global {
 }
 
 export { MenuBarElement };
-
-import { MenuBarItem } from '../@types/interfaces';
