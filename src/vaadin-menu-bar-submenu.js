@@ -26,7 +26,6 @@ class MenuBarSubmenuElement extends ContextMenuElement {
     this.$.overlay.opened = opened;
   }
 
-
   /**
    * Overriding the public method to reset expanded button state.
    */

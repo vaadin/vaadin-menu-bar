@@ -1,10 +1,10 @@
-import {ThemableMixin} from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
+import { ThemableMixin } from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
 
-import {ElementMixin} from '@vaadin/vaadin-element-mixin/vaadin-element-mixin.js';
+import { ElementMixin } from '@vaadin/vaadin-element-mixin/vaadin-element-mixin.js';
 
-import {ButtonsMixin} from './vaadin-menu-bar-buttons-mixin.js';
+import { ButtonsMixin } from './vaadin-menu-bar-buttons-mixin.js';
 
-import {InteractionsMixin} from './vaadin-menu-bar-interactions-mixin.js';
+import { InteractionsMixin } from './vaadin-menu-bar-interactions-mixin.js';
 
 /**
  * `<vaadin-menu-bar>` is a Web Component providing a set of horizontally stacked buttons offering
@@ -35,13 +35,7 @@ import {InteractionsMixin} from './vaadin-menu-bar-interactions-mixin.js';
  *
  * See [ThemableMixin – how to apply styles for shadow parts](https://github.com/vaadin/vaadin-themable-mixin/wiki)
  */
-declare class MenuBarElement extends
-  ButtonsMixin(
-  InteractionsMixin(
-  ElementMixin(
-  ThemableMixin(
-  HTMLElement)))) {
-
+declare class MenuBarElement extends ButtonsMixin(InteractionsMixin(ElementMixin(ThemableMixin(HTMLElement)))) {
   /**
    * Defines a hierarchical structure, where root level items represent menu bar buttons,
    * and `children` property configures a submenu with items to be opened below
@@ -74,12 +68,11 @@ declare class MenuBarElement extends
 }
 
 declare global {
-
   interface HTMLElementTagNameMap {
-    "vaadin-menu-bar": MenuBarElement;
+    'vaadin-menu-bar': MenuBarElement;
   }
 }
 
-export {MenuBarElement};
+export { MenuBarElement };
 
-import {MenuBarItem} from '../@types/interfaces';
+import { MenuBarItem } from '../@types/interfaces';

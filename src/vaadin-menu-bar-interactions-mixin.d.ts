@@ -1,19 +1,15 @@
-export {InteractionsMixin};
-
 declare function InteractionsMixin<T extends new (...args: any[]) => {}>(base: T): T & InteractionsMixinConstructor;
 
 interface InteractionsMixinConstructor {
-  new(...args: any[]): InteractionsMixin;
+  new (...args: any[]): InteractionsMixin;
 }
-
-export {InteractionsMixinConstructor};
 
 interface InteractionsMixin {
   /**
    * If true, the submenu will open on hover (mouseover) instead of click.
    * @attr {boolean} open-on-hover
    */
-  openOnHover: boolean|null|undefined;
+  openOnHover: boolean | null | undefined;
 
   /**
    * Can be called to manually notify a resizable and its descendant
@@ -29,3 +25,5 @@ interface InteractionsMixin {
 
   _close(restoreFocus: boolean): void;
 }
+
+export { InteractionsMixin, InteractionsMixinConstructor };

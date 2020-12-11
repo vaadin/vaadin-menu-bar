@@ -1,12 +1,8 @@
-export {ButtonsMixin};
-
 declare function ButtonsMixin<T extends new (...args: any[]) => {}>(base: T): T & ButtonsMixinConstructor;
 
 interface ButtonsMixinConstructor {
-  new(...args: any[]): ButtonsMixin;
+  new (...args: any[]): ButtonsMixin;
 }
-
-export {ButtonsMixinConstructor};
 
 interface ButtonsMixin {
   readonly _buttons: HTMLElement[];
@@ -23,3 +19,5 @@ interface ButtonsMixin {
    */
   render(): void;
 }
+
+export { ButtonsMixin, ButtonsMixinConstructor };

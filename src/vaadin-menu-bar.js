@@ -46,53 +46,49 @@ import './vaadin-menu-bar-button.js';
  * @mixes ElementMixin
  * @mixes ThemableMixin
  */
-class MenuBarElement extends
-  ButtonsMixin(
-    InteractionsMixin(
-      ElementMixin(
-        ThemableMixin(PolymerElement)))) {
+class MenuBarElement extends ButtonsMixin(InteractionsMixin(ElementMixin(ThemableMixin(PolymerElement)))) {
   static get template() {
     return html`
-    <style>
-      :host {
-        display: block;
-      }
+      <style>
+        :host {
+          display: block;
+        }
 
-      :host([hidden]) {
-        display: none !important;
-      }
+        :host([hidden]) {
+          display: none !important;
+        }
 
-      [part="container"] {
-        position: relative;
-        display: flex;
-        width: 100%;
-        flex-wrap: nowrap;
-        overflow: hidden;
-      }
+        [part='container'] {
+          position: relative;
+          display: flex;
+          width: 100%;
+          flex-wrap: nowrap;
+          overflow: hidden;
+        }
 
-      [part\$="button"] {
-        flex-shrink: 0;
-      }
+        [part$='button'] {
+          flex-shrink: 0;
+        }
 
-      [part="overflow-button"] {
-        margin-right: 0;
-      }
+        [part='overflow-button'] {
+          margin-right: 0;
+        }
 
-      .dots::before {
-        display: block;
-        content: "\\00B7\\00B7\\00B7";
-        font-size: inherit;
-        line-height: inherit;
-      }
-    </style>
+        .dots::before {
+          display: block;
+          content: '\\00B7\\00B7\\00B7';
+          font-size: inherit;
+          line-height: inherit;
+        }
+      </style>
 
-    <div part="container">
-      <vaadin-menu-bar-button part="overflow-button" hidden\$="[[!_hasOverflow]]">
-        <div class="dots"></div>
-      </vaadin-menu-bar-button>
-    </div>
-    <vaadin-menu-bar-submenu is-root=""></vaadin-menu-bar-submenu>
-`;
+      <div part="container">
+        <vaadin-menu-bar-button part="overflow-button" hidden$="[[!_hasOverflow]]">
+          <div class="dots"></div>
+        </vaadin-menu-bar-button>
+      </div>
+      <vaadin-menu-bar-submenu is-root=""></vaadin-menu-bar-submenu>
+    `;
   }
 
   static get is() {
