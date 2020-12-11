@@ -1,28 +1,14 @@
 <!DOCTYPE html>
 
 <head lang="en">
-  <meta charset="UTF-8">
-  <script src="../../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script type="module">
-import '@vaadin/vaadin-lumo-styles/icons.js';
-import '@vaadin/vaadin-icons/vaadin-icons.js';
-import '@polymer/iron-icon/iron-icon.js';
-window.polymerSkipLoadingFontRoboto = true;
-
-var theme = window.location.search.replace(/.*theme=(\w+).*/, '$1') || 'lumo';
-document.write(`<link rel="import" href="../../theme/${theme}/vaadin-menu-bar.html">`);
-
-setTimeout(function() {
-  window.ShadyDOM && window.ShadyDOM.flush(); // Force DOM composition
-  window.webComponentsAreReady = true; // Checked in gemini before capture callback
-});
-</script>
-  <script type="module" src="../../../../@vaadin/vaadin-lumo-styles/icons.js"></script>
-  <script type="module" src="../../../../@vaadin/vaadin-icons/vaadin-icons.js"></script>
-  <script type="module" src="../../../../@polymer/iron-icon/iron-icon.js"></script>
+  <meta charset="UTF-8" />
+  <title>Menu bar icons tests</title>
+  <script>
+    window.polymerSkipLoadingFontRoboto = true;
+  </script>
   <style>
     /* Force the overflow */
-    #icons-tests {
+    #tests {
       padding: 10px;
       height: 320px;
     }
@@ -30,72 +16,60 @@ setTimeout(function() {
 </head>
 
 <body>
-
-  <div id="icons-tests">
+  <div id="tests">
     <vaadin-menu-bar></vaadin-menu-bar>
   </div>
 
   <script type="module">
-import '@vaadin/vaadin-lumo-styles/icons.js';
-import '@vaadin/vaadin-icons/vaadin-icons.js';
-import '@polymer/iron-icon/iron-icon.js';
-function makeIcon(img, txt) {
-  const item = document.createElement('vaadin-context-menu-item');
-  const icon = document.createElement('iron-icon');
-  icon.setAttribute('icon', img);
-  item.appendChild(icon);
-  item.setAttribute('theme', 'menu-bar-item');
-  if (txt) {
-    const span = document.createElement('span');
-    span.textContent = txt;
-    item.appendChild(span);
-  }
-  return item;
-}
+    import '@vaadin/vaadin-lumo-styles/icons.js';
+    import '@vaadin/vaadin-icons/vaadin-icons.js';
 
-const menu = document.querySelector('vaadin-menu-bar');
+    function makeIcon(img, txt) {
+      const item = document.createElement('vaadin-context-menu-item');
+      const icon = document.createElement('iron-icon');
+      icon.setAttribute('icon', img);
+      item.appendChild(icon);
+      item.setAttribute('theme', 'menu-bar-item');
+      if (txt) {
+        const span = document.createElement('span');
+        span.textContent = txt;
+        item.appendChild(span);
+      }
+      return item;
+    }
 
-var theme = window.location.search.replace(/.*theme=(\w+).*/, '$1') || 'lumo';
-if (theme === 'lumo') {
-  menu.parentElement.style.width = '540px';
-} else if (theme === 'material') {
-  menu.parentElement.style.width = '600px';
-}
+    (async () => {
+      const theme = window.location.search.replace(/.*theme=(\w+).*/, '$1') || 'lumo';
 
-menu.items = [
-  {
-    component: makeIcon('lumo:bell', 'Notifications')
-  },
-  {
-    component: makeIcon('vaadin:user')
-  },
-  {
-    component: makeIcon('lumo:chevron-down')
-  },
-  {
-    component: makeIcon('vaadin:arrow-circle-right', 'Sign Out')
-  },
-  {
-    component: makeIcon('lumo:photo', 'Gallery')
-  },
-  {
-    component: makeIcon('vaadin:archive', 'Archive')
-  },
-  {
-    component: makeIcon('lumo:phone')
-  },
-  {
-    component: makeIcon('vaadin:bar-chart')
-  }
-];
+      await import('../../theme/' + theme + '/vaadin-menu-bar.js');
 
-menu.render();
+      const menu = document.querySelector('vaadin-menu-bar');
 
-// eslint-disable-next-line no-unused-vars
-function openSubMenu() {
-  const buttons = menu.shadowRoot.querySelectorAll('vaadin-menu-bar-button');
-  buttons[buttons.length - 1].click();
-}
+      if (theme === 'lumo') {
+        menu.parentElement.style.width = '540px';
+      } else if (theme === 'material') {
+        menu.parentElement.style.width = '600px';
+      }
+
+      menu.items = [
+        { component: makeIcon('lumo:bell', 'Notifications') },
+        { component: makeIcon('vaadin:user') },
+        { component: makeIcon('lumo:chevron-down') },
+        { component: makeIcon('vaadin:arrow-circle-right', 'Sign Out') },
+        { component: makeIcon('lumo:photo', 'Gallery') },
+        { component: makeIcon('vaadin:archive', 'Archive') },
+        { component: makeIcon('lumo:phone') },
+        { component: makeIcon('vaadin:bar-chart') }
+      ];
+
+      menu.render();
+
+      const buttons = menu.shadowRoot.querySelectorAll('vaadin-menu-bar-button');
+      buttons[buttons.length - 1].click();
+
+      window.requestAnimationFrame(() => {
+        document.getElementById('tests').dataset.ready = true;
+      });
+    })();
   </script>
-
 </body>
