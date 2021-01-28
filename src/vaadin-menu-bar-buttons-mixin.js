@@ -95,7 +95,7 @@ export const ButtonsMixin = (superClass) =>
           btn.appendChild(item);
           item.classList.remove('vaadin-menu-item');
         }
-      };
+      }
       overflow.item = { children: [] };
       this._hasOverflow = false;
 
