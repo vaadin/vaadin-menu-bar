@@ -213,7 +213,7 @@ describe('root menu layout', () => {
 });
 
 describe('overflow button', () => {
-  let menu, buttons, overflow;
+  let container, menu, buttons, overflow;
 
   const assertHidden = (elem) => {
     const style = getComputedStyle(elem);
@@ -228,9 +228,12 @@ describe('overflow button', () => {
   };
 
   beforeEach(async () => {
-    menu = fixtureSync('<vaadin-menu-bar></vaadin-menu-bar>');
+    container = fixtureSync(
+      '<div style="display: flex;"><vaadin-menu-bar style="min-width: 100%"></vaadin-menu-bar></div>'
+    );
+    menu = container.firstChild;
 
-    menu.style.width = '250px';
+    container.style.width = '250px';
 
     menu.items = [
       { text: 'Item 1' },
@@ -239,7 +242,7 @@ describe('overflow button', () => {
       { text: 'Item 4' },
       { text: 'Item 5', disabled: true }
     ];
-    await nextRender(menu);
+    await nextRender(container);
     buttons = menu._buttons;
     overflow = buttons[buttons.length - 1];
   });
@@ -267,9 +270,9 @@ describe('overflow button', () => {
   });
 
   it('should show buttons and update overflow items when width increased', async () => {
-    menu.style.width = '350px';
+    container.style.width = '350px';
     menu.notifyResize();
-    await nextRender(menu);
+    await nextRender(container);
     assertVisible(buttons[2]);
     expect(buttons[2].disabled).to.not.be.true;
     assertVisible(buttons[3]);
@@ -280,9 +283,9 @@ describe('overflow button', () => {
 
   it('should show buttons and update overflow items when width increased in RTL', async () => {
     menu.setAttribute('dir', 'rtl');
-    menu.style.width = '350px';
+    container.style.width = '350px';
     menu.notifyResize();
-    await nextRender(menu);
+    await nextRender(container);
     assertVisible(buttons[2]);
     expect(buttons[2].disabled).to.not.be.true;
     assertVisible(buttons[3]);
@@ -292,9 +295,9 @@ describe('overflow button', () => {
   });
 
   it('should hide buttons and update overflow items when width decreased', async () => {
-    menu.style.width = '150px';
+    container.style.width = '150px';
     menu.notifyResize();
-    await nextRender(menu);
+    await nextRender(container);
     assertHidden(buttons[1]);
     expect(buttons[1].disabled).to.be.true;
     expect(overflow.item.children.length).to.equal(4);
@@ -306,9 +309,9 @@ describe('overflow button', () => {
 
   it('should hide buttons and update overflow items when width decreased in RTL', async () => {
     menu.setAttribute('dir', 'rtl');
-    menu.style.width = '150px';
+    container.style.width = '150px';
     menu.notifyResize();
-    await nextRender(menu);
+    await nextRender(container);
     assertHidden(buttons[1]);
     expect(buttons[1].disabled).to.be.true;
     expect(overflow.item.children.length).to.equal(4);
@@ -319,9 +322,33 @@ describe('overflow button', () => {
   });
 
   it('should hide overflow button and reset its items when all buttons fit', async () => {
-    menu.style.width = 'auto';
+    container.style.width = '500px';
     menu.notifyResize();
-    await nextRender(menu);
+    await nextRender(container);
+    assertVisible(buttons[2]);
+    expect(buttons[2].disabled).to.not.be.true;
+    assertVisible(buttons[3]);
+    expect(buttons[3].disabled).to.not.be.true;
+    assertVisible(buttons[4]);
+    expect(buttons[4].disabled).to.be.true;
+    expect(overflow.hasAttribute('hidden')).to.be.true;
+    expect(overflow.item.children.length).to.equal(0);
+  });
+
+  it('should hide overflow button and reset its items when all buttons fit even with min-width set to 0', async () => {
+    // must work even if min-width is set to 0
+    menu.style.minWidth = '0'; // see https://github.com/vaadin/vaadin-menu-bar/issues/130
+    container.style.width = '150px';
+    menu.notifyResize();
+    await nextRender(container);
+    assertHidden(buttons[2]);
+    expect(buttons[2].disabled).to.be.true;
+    assertHidden(buttons[3]);
+    expect(buttons[3].disabled).to.be.true;
+
+    container.style.width = '500px';
+    menu.notifyResize();
+    await nextRender(container);
     assertVisible(buttons[2]);
     expect(buttons[2].disabled).to.not.be.true;
     assertVisible(buttons[3]);
