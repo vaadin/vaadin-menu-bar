@@ -94,6 +94,8 @@ This program is available under Apache License Version 2.0, available at https:/
       const buttons = this._buttons.slice(0);
       const overflow = buttons.pop();
       const isRTL = this.getAttribute('dir') === 'rtl';
+      // optional chaining is not supported in IE
+      const previouslyOverflowingButtons = (overflow.item && overflow.item.children && overflow.item.children.length) || 0;
 
       // reset all buttons in the menu bar and the overflow button
       for (let i = 0; i < buttons.length; i++) {
@@ -111,10 +113,6 @@ This program is available under Apache License Version 2.0, available at https:/
       }
       overflow.item = {children: []};
       this._hasOverflow = false;
-
-      if (this._subMenu.opened) {
-        this._subMenu.close();
-      }
 
       // hide any overflowing buttons and put them in the 'overflow' button
       if (container.offsetWidth < container.scrollWidth) {
@@ -143,6 +141,11 @@ This program is available under Apache License Version 2.0, available at https:/
         overflow.item = {
           children: buttons.filter((b, idx) => idx >= i).map(b => b.item)
         };
+      }
+      // optional chaining is not supported in IE
+      const currentlyOverflowingItems = (overflow.item && overflow.item.children && overflow.item.children.length) || 0;
+      if (previouslyOverflowingButtons !== currentlyOverflowingItems && this._subMenu.opened) {
+        this._subMenu.close();
       }
     }
 
