@@ -1,10 +1,13 @@
 # &lt;vaadin-menu-bar&gt;
 
+> ⚠️ Starting from Vaadin 20, the source code and issues for this component are migrated to the [`vaadin/web-components`](https://github.com/vaadin/web-components/tree/master/packages/vaadin-menu-bar) monorepository.
+> This repository contains the source code and releases of `<vaadin-menu-bar>` for the Vaadin versions 10 to 19.
+
+[&lt;vaadin-menu-bar&gt;](https://vaadin.com/components/vaadin-menu-bar) is a Web Component providing application menu functionality, part of the [Vaadin components](https://vaadin.com/components).
+
 [Live Demo ↗](https://vaadin.com/components/vaadin-menu-bar/html-examples)
 |
 [API documentation ↗](https://vaadin.com/components/vaadin-menu-bar/html-api)
-
-[&lt;vaadin-menu-bar&gt;](https://vaadin.com/components/vaadin-menu-bar) is a Web Component providing application menu functionality, part of the [Vaadin components](https://vaadin.com/components).
 
 [![npm version](https://badgen.net/npm/v/@vaadin/vaadin-menu-bar)](https://www.npmjs.com/package/@vaadin/vaadin-menu-bar)
 [![Build Status](https://travis-ci.org/vaadin/vaadin-menu-bar.svg?branch=master)](https://travis-ci.org/vaadin/vaadin-menu-bar)
