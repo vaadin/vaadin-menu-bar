@@ -71,6 +71,11 @@
     describe('root menu layout', () => {
       let menu, buttons;
 
+      function updateItemsAndButtons() {
+        menu.items = [...menu.items];
+        buttons = menu._buttons;
+      }
+
       beforeEach(async() => {
         menu = fixture('default');
         menu.items = [
@@ -261,6 +266,55 @@
           menu.removeAttribute('theme');
           buttons.forEach(btn =>
             expect(btn.hasAttribute('theme')).to.be.false);
+        });
+
+        it('should override the theme attribute of the component with the item.theme property', () => {
+          menu.setAttribute('theme', 'contained');
+          menu.items[1].theme = 'item-theme';
+          updateItemsAndButtons();
+
+          expect(buttons[0].getAttribute('theme')).to.equal('contained');
+          expect(buttons[1].getAttribute('theme')).to.equal('item-theme');
+
+          menu.removeAttribute('theme');
+
+          expect(buttons[0].hasAttribute('theme')).to.be.false;
+          expect(buttons[1].getAttribute('theme')).to.equal('item-theme');
+        });
+
+        it('should support setting multiple themes with an array', () => {
+          menu.items[1].theme = ['theme-1', 'theme-2'];
+          updateItemsAndButtons();
+
+          expect(buttons[1].getAttribute('theme')).to.equal('theme-1 theme-2');
+
+          menu.items[1].theme = [];
+          updateItemsAndButtons();
+
+          expect(buttons[1].hasAttribute('theme')).to.be.false;
+        });
+
+        it('should override the theme attribute of the component with an empty item.theme property', () => {
+          menu.setAttribute('theme', 'contained');
+          menu.items[0].theme = '';
+          updateItemsAndButtons();
+
+          expect(buttons[0].hasAttribute('theme')).to.be.false;
+
+          menu.items[0].theme = [];
+          updateItemsAndButtons();
+
+          expect(buttons[0].hasAttribute('theme')).to.be.false;
+
+          menu.items[0].theme = [''];
+          updateItemsAndButtons();
+
+          expect(buttons[0].hasAttribute('theme')).to.be.false;
+
+          menu.items[0].theme = null;
+          updateItemsAndButtons();
+
+          expect(buttons[0].getAttribute('theme')).to.equal('contained');
         });
       });
     });

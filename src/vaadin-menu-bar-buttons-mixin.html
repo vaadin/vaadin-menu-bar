@@ -211,6 +211,8 @@ This program is available under Apache License Version 2.0, available at https:/
         if (this.theme && this.theme !== '') {
           button.setAttribute('theme', this.theme);
         }
+        this._setButtonTheme(button, this.theme);
+
         container.insertBefore(button, overflow);
         button.setAttribute('role', 'menuitem');
       });
@@ -225,6 +227,23 @@ This program is available under Apache License Version 2.0, available at https:/
         Polymer.Async.animationFrame,
         this.__detectOverflow.bind(this)
       );
+    }
+
+    /** @protected */
+    _setButtonTheme(btn, hostTheme) {
+      let theme = hostTheme;
+
+      // item theme takes precedence over host theme even if it's empty, as long as it's not undefined or null
+      const itemTheme = btn.item && btn.item.theme;
+      if (itemTheme != null) {
+        theme = Array.isArray(itemTheme) ? itemTheme.join(' ') : itemTheme;
+      }
+
+      if (theme) {
+        btn.setAttribute('theme', theme);
+      } else {
+        btn.removeAttribute('theme');
+      }
     }
   };
 </script>
