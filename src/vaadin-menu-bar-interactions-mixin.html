@@ -92,11 +92,10 @@ This program is available under Apache License Version 2.0, available at https:/
 
     /** @private */
     _themeChanged(theme) {
+      this._buttons.forEach((btn) => this._setButtonTheme(btn, theme));
       if (theme) {
-        this._buttons.forEach(button => button.setAttribute('theme', theme));
         this._subMenu.setAttribute('theme', theme);
       } else {
-        this._buttons.forEach(button => button.removeAttribute('theme'));
         this._subMenu.removeAttribute('theme');
       }
     }
@@ -428,5 +427,3 @@ This program is available under Apache License Version 2.0, available at https:/
     }
   };
 </script>
-
-
