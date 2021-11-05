@@ -208,9 +208,6 @@ This program is available under Apache License Version 2.0, available at https:/
           button.setAttribute('aria-expanded', 'false');
         }
         button.setAttribute('part', 'menu-bar-button');
-        if (this.theme && this.theme !== '') {
-          button.setAttribute('theme', this.theme);
-        }
         this._setButtonTheme(button, this.theme);
 
         container.insertBefore(button, overflow);
