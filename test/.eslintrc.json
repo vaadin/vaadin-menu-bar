@@ -16,6 +16,8 @@
     "home": false,
     "end": false,
     "esc": false,
+    "enter": false,
+    "space": false,
     "onceOpened": false,
     "sinon": false
   }
