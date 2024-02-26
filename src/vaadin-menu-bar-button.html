@@ -27,6 +27,19 @@ This program is available under Apache License Version 2.0, available at https:/
       static get is() {
         return 'vaadin-menu-bar-button';
       }
+
+      /** @protected */
+      ready() {
+        super.ready();
+
+        this.addEventListener('keydown', e => {
+          this._activeKeyPressed = e.keyCode === 13 || e.keyCode === 32;
+
+          setTimeout(() => {
+            this._activeKeyPressed = null;
+          });
+        });
+      }
     }
 
     customElements.define(MenuBarButtonElement.is, MenuBarButtonElement);

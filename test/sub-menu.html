@@ -170,6 +170,24 @@
         expect(subMenu.opened).to.be.false;
       });
 
+      (isIOS ? it.skip : it)('should focus the first item on button space', async() => {
+        space(buttons[0]);
+        buttons[0].click();
+        await onceOpened(subMenu);
+        await nextRender(subMenu);
+        const item = subMenu.$.overlay.querySelector('vaadin-context-menu-item');
+        expect(item.hasAttribute('focused')).to.be.true;
+      });
+
+      (isIOS ? it.skip : it)('should focus the first item on button enter', async() => {
+        enter(buttons[0]);
+        buttons[0].click();
+        await onceOpened(subMenu);
+        await nextRender(subMenu);
+        const item = subMenu.$.overlay.querySelector('vaadin-context-menu-item');
+        expect(item.hasAttribute('focused')).to.be.true;
+      });
+
       (isIOS ? it.skip : it)('should switch menubar button with items and open submenu on arrow left', async() => {
         arrowDown(buttons[0]);
         await onceOpened(subMenu);

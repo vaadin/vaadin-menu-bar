@@ -26,6 +26,14 @@ window.esc = function(target) {
   MockInteractions.keyDownOn(target, 27, [], 'Escape');
 };
 
+window.enter = function(target) {
+  MockInteractions.keyDownOn(target, 13, [], 'Enter');
+};
+
+window.space = function(target) {
+  MockInteractions.keyDownOn(target, 32, [], ' ');
+};
+
 window.onceOpened = function(element) {
   return new Promise(resolve => {
     const listener = (e) => {
