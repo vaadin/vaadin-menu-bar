@@ -34,7 +34,10 @@ This program is available under Apache License Version 2.0, available at https:/
 
         this.addEventListener('keydown', e => {
           this._activeKeyPressed = e.keyCode === 13 || e.keyCode === 32;
+        });
 
+        // Clear the flag after the click event is handled by menu-bar.
+        this.addEventListener('click', e => {
           setTimeout(() => {
             this._activeKeyPressed = null;
           });
@@ -45,4 +48,3 @@ This program is available under Apache License Version 2.0, available at https:/
     customElements.define(MenuBarButtonElement.is, MenuBarButtonElement);
   })();
 </script>
-
